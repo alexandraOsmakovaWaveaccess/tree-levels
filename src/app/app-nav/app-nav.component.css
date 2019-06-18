@@ -1,0 +1,36 @@
+nav ul li {
+  font-size: 16px;
+  color: #151515;
+  font-weight: normal;
+  letter-spacing: 0.2px;
+  line-height: 16px;
+}
+
+header {
+  width: 100%;
+  background-color: #004076;
+  padding: 0 32px;
+}
+
+nav {
+  width: 40%;
+}
+
+nav ul {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+nav ul li {
+  padding: 16px;
+  list-style-type: none;
+  color: #ffffff;
+  border-bottom: 4px solid rgba(255, 255, 255, 0);
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+nav ul li:hover {
+  border-bottom: 4px solid white;
+}

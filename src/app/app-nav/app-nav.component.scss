@@ -1,0 +1,31 @@
+@import "../../assets/theme.scss";
+
+header {
+  width: 100%;
+  background-color: $dark-blue;
+  padding: 0 32px;
+}
+
+nav {
+  width: 40%;
+
+  ul {
+    margin: 0;
+    display: flex;
+    align-items: center;
+
+    li {
+      padding: 16px;
+      list-style-type: none;
+      @extend %commonText;
+      color: #ffffff;
+      border-bottom: 4px solid rgba(255, 255, 255, 0);
+      cursor: pointer;
+      transition: all 0.5s ease;
+    }
+
+    li:hover {
+      border-bottom: 4px solid rgba(255, 255, 255, 1);
+    }
+  }
+}
