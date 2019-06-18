@@ -1,0 +1,45 @@
+$dark-blue: #004076;
+$light-blue: #e4ebf0;
+$light-gray: #f9fafb;
+$dark-gray: #151515;
+$green: #00994c;
+
+%heading1 {
+  font-size: 96px;
+  font-weight: 300;
+  color: $dark-gray;
+  letter-spacing: -1.5px;
+  margin: 0;
+}
+
+%heading2 {
+  font-size: 22px;
+  color: $dark-gray;
+  font-weight: normal;
+  letter-spacing: -0.5px;
+  margin: 0;
+}
+
+%heading3 {
+  font-size: 20px;
+  color: $dark-gray;
+  font-weight: 500;
+  letter-spacing: 0px;
+  margin: 0;
+}
+
+%heading4 {
+  font-size: 18px;
+  color: $dark-gray;
+  font-weight: 500;
+  letter-spacing: 0px;
+  margin: 0;
+}
+
+%commonText {
+  font-size: 16px;
+  color: $dark-gray;
+  font-weight: normal;
+  letter-spacing: 0.2px;
+  line-height: 16px;
+}
