@@ -40,6 +40,8 @@ section h4 {
   justify-content: space-between;
   padding: 24px;
   box-shadow: 0 0 4px 0 rgba(179, 179, 179, 0.54);
+  position: relative;
+  z-index: 2;
 }
 
 .table_controls button {
@@ -69,7 +71,7 @@ th {
 
 tr th, tr td {
   text-align: left;
-  padding: 10px 24px;
+  padding: 16px 24px;
   border-right: 1px solid #ededed;
   border-bottom: 1px solid #ededed;
 }
