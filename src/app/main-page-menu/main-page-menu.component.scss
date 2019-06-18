@@ -1,0 +1,31 @@
+@import "../../assets/theme.scss";
+
+section {
+    width: 20vw;
+}
+.tree-node {
+    display: flex;
+    align-items: center;
+    @extend %heading4;
+    color: $dark-blue;
+    text-transform: uppercase;
+    padding: 16px;
+    border-bottom: 1px solid #ededed;
+    transition: all 0.5s ease;
+
+    .styled_mat_icon {
+        color: $mid-blue;
+    }
+
+    button {
+        background-color: transparent;
+        padding: 0;
+        margin-right: 32px;
+    }
+}
+
+.expanded_item {
+    background-color: $dark-blue;
+    color: #ffffff;
+    border-bottom: 1px solid $dark-blue;
+}
