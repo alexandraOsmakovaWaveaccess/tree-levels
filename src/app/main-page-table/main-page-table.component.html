@@ -1,0 +1,42 @@
+<section>
+  <h4>SECTION NAME</h4>
+  <div class="table_wrap">
+    <div class="table_controls">
+      <button>Save</button>
+      <button>Add +</button>
+    </div>
+    <table cdk-table [dataSource]="dataSource">
+      <!-- Position Column -->
+      <ng-container cdkColumnDef="position">
+        <th cdk-header-cell *cdkHeaderCellDef> 1st level</th>
+        <td cdk-cell *cdkCellDef="let element"> {{element.position}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container cdkColumnDef="name">
+        <th cdk-header-cell *cdkHeaderCellDef> 2nd level </th>
+        <td cdk-cell *cdkCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container cdkColumnDef="weight">
+        <th cdk-header-cell *cdkHeaderCellDef> 3rd level </th>
+        <td cdk-cell *cdkCellDef="let element"> {{element.weight}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container cdkColumnDef="symbol">
+        <th cdk-header-cell *cdkHeaderCellDef> 4th level </th>
+        <td cdk-cell *cdkCellDef="let element"> {{element.symbol}} </td>
+      </ng-container>
+      <!-- 
+      <ng-container cdkColumnDef="symbol">
+        <th cdk-header-cell *cdkHeaderCellDef> 5th level </th>
+        <td cdk-cell *cdkCellDef="let element"> {{element.symbol}} </td>
+      </ng-container> -->
+
+      <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+      <tr cdk-row *cdkRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</section>
