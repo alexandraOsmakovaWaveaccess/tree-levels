@@ -2,6 +2,10 @@
 
 section {
     width: 20vw;
+    height: 100%;
+    box-shadow: 0 0 4px 0 rgba(179, 179, 179, 0.54);
+    position: relative;
+    z-index: 2;
 }
 .tree-node {
     display: flex;

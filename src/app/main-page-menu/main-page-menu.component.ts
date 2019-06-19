@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ArrayDataSource } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { DataKeeperService } from '../services/data-keeper.service';
-import { ExampleFlatNode } from '../interface';
+import { TreeLevel } from '../interface';
 
 @Component({
   selector: 'app-main-page-menu',
@@ -18,14 +18,14 @@ export class MainPageMenuComponent implements OnInit {
   ngOnInit() {
   }
 
-  treeControl = new FlatTreeControl<ExampleFlatNode>(
+  treeControl = new FlatTreeControl<TreeLevel>(
     node => node.level, node => node.expandable);
 
   dataSource = new ArrayDataSource(this.treeData);
 
-  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+  hasChild = (_: number, node: TreeLevel) => node.expandable;
 
-  getParentNode(node: ExampleFlatNode) {
+  getParentNode(node: TreeLevel) {
     const nodeIndex = this.treeData.indexOf(node);
 
     for (let i = nodeIndex - 1; i >= 0; i--) {
@@ -37,7 +37,7 @@ export class MainPageMenuComponent implements OnInit {
     return null;
   }
 
-  shouldRender(node: ExampleFlatNode) {
+  shouldRender(node: TreeLevel) {
     const parent = this.getParentNode(node);
     return !parent || parent.isExpanded;
   }
