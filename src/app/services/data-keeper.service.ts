@@ -39,7 +39,7 @@ export class DataKeeperService {
       name: 'First level item - 1',
       expandable: true,
       level: 1,
-      path: '1/4',
+      path: '0/4',
       id: 4
     },
     {
@@ -65,10 +65,24 @@ export class DataKeeperService {
     },
     {
       name: 'Third level item - 1',
-      expandable: false,
+      expandable: true,
       level: 3,
       path: '0/4/6/8',
       id: 8
+    },
+    {
+      name: 'Fourth level item - 0',
+      expandable: true,
+      level: 4,
+      path: '0/4/6/8/9',
+      id: 9
+    },
+    {
+      name: 'Fifth level item - 0',
+      expandable: false,
+      level: 5,
+      path: '0/4/6/8/9/10',
+      id: 10
     }];
 
   constructor() {
@@ -83,11 +97,8 @@ export class DataKeeperService {
       }
     }))
 
-    dataToTree.children = dataToTree.children.filter(el => {
-      if (el.children.length > 0) {
-        return el
-      }
-    })
+    this.clearChildrenList(dataToTree);
+    this.checkChildChildren(dataToTree);
     console.log(dataToTree)
   }
 
@@ -103,7 +114,7 @@ export class DataKeeperService {
   }
 
   getAllChildren(path) {
-    const children = new Array();
+    let children = new Array();
     for (let i = 0; i < this.dataFlat.length; i++) {
       if (this.dataFlat[i].path !== path && this.dataFlat[i].path.indexOf(path) !== -1) {
         children.push({
@@ -114,7 +125,22 @@ export class DataKeeperService {
         })
       }
     }
-
     return children
   }
+
+  clearChildrenList(data) {
+      data.children = data.children.filter(el => {
+        if (el.path.length === `${data.path}/`.length + `${el.id}`.length) {
+          return el
+        }
+      })
+  }
+
+  checkChildChildren(data) {
+      for(let i = 0; i < data.children.length; i++) {
+        this.clearChildrenList(data.children[i]);
+        this.checkChildChildren(data.children[i])
+      }
+  }
+
 }

@@ -16,6 +16,6 @@ export interface TreeItem {
   name: string;
   path: string;
   id: number,
-  children: any;
+  children: any[];
 }
 
