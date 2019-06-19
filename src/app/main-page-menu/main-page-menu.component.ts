@@ -10,7 +10,7 @@ import { TreeLevel } from '../interface';
   styleUrls: ['./main-page-menu.component.scss']
 })
 export class MainPageMenuComponent implements OnInit {
-  treeData = this.dataKeeper.dataTree
+  treeData = this.dataKeeper.dataFlat
 
   constructor(private dataKeeper: DataKeeperService) {
    }
