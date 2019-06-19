@@ -15,7 +15,8 @@ export class MainPageTableComponent implements OnInit {
   // dataSource = new ExampleDataSource();
 
   constructor(private dataKeeper: DataKeeperService) {
-    this.resortData()
+    this.resortData();
+    this.dataKeeper.getTableData()
     // this.dataSource.data = new BehaviorSubject<TabbleElement[]>(this.activTable);
     // console.log(this.dataSource)
   }

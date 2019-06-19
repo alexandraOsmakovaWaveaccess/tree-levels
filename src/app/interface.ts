@@ -15,6 +15,7 @@ export interface TabbleElement {
 export interface TreeItem {
   name: string;
   path: string;
+  level: number;
   id: number,
   children: any[];
 }

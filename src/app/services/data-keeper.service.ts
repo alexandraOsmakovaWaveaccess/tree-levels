@@ -29,7 +29,7 @@ export class DataKeeperService {
       id: 2
     },
     {
-      name: 'Second level item - 0',
+      name: 'Second level item - 1',
       expandable: false,
       level: 2,
       path: '0/1/3',
@@ -86,10 +86,9 @@ export class DataKeeperService {
     }];
 
   constructor() {
-    this.createTree()
   }
 
-  public createTree() {
+  private createTree() {
 
     let dataToTree: TreeItem = this.extractChild(this.dataFlat.find(el => {
       if (el.path.length === 1) {
@@ -99,21 +98,23 @@ export class DataKeeperService {
 
     this.clearChildrenList(dataToTree);
     this.checkChildChildren(dataToTree);
-    console.log(dataToTree)
+
+    return dataToTree
   }
 
-  extractChild(el) {
+  private extractChild(el) {
     let treeObject: TreeItem = {
       name: el.name,
       path: el.path,
       id: el.id,
+      level: el.level,
       children: this.getAllChildren(el.path)
     };
 
     return treeObject;
   }
 
-  getAllChildren(path) {
+  private getAllChildren(path) {
     let children = new Array();
     for (let i = 0; i < this.dataFlat.length; i++) {
       if (this.dataFlat[i].path !== path && this.dataFlat[i].path.indexOf(path) !== -1) {
@@ -121,6 +122,7 @@ export class DataKeeperService {
           name: this.dataFlat[i].name,
           path: this.dataFlat[i].path,
           id: this.dataFlat[i].id,
+          level: this.dataFlat[i].level,
           children: this.getAllChildren(this.dataFlat[i].path)
         })
       }
@@ -128,19 +130,48 @@ export class DataKeeperService {
     return children
   }
 
-  clearChildrenList(data) {
-      data.children = data.children.filter(el => {
-        if (el.path.length === `${data.path}/`.length + `${el.id}`.length) {
-          return el
-        }
-      })
+  private clearChildrenList(data) {
+    data.children = data.children.filter(el => {
+      if (el.path.length === `${data.path}/`.length + `${el.id}`.length) {
+        return el
+      }
+    })
   }
 
-  checkChildChildren(data) {
-      for(let i = 0; i < data.children.length; i++) {
-        this.clearChildrenList(data.children[i]);
-        this.checkChildChildren(data.children[i])
+  private checkChildChildren(data) {
+    for (let i = 0; i < data.children.length; i++) {
+      this.clearChildrenList(data.children[i]);
+      this.checkChildChildren(data.children[i])
+    }
+  }
+
+  public getTableData() {
+    let acc = [];
+
+    const iterator = (i) => {
+      const lastItem = acc[acc.length - 1] || {};
+      
+      acc.push({
+        ...lastItem,
+        [`level_${i.level}`]: i.name,
+        id: i.id
+      });
+
+      if (i.children && i.level < 6) {
+        i.children.forEach(iterator);      
       }
+    }
+
+    this.createTree().children.forEach(iterator);  
+
+    // for(let i = 0; i < acc.length; i++) {
+    //   if(i !== acc.length-1 && (JSON.stringify(acc[i+1]).indexOf(JSON.stringify(acc[i])))) {
+    //     acc.splice(i, 1)
+    //   }
+    // }
+
+    console.log(acc)
+    return acc
   }
 
 }
