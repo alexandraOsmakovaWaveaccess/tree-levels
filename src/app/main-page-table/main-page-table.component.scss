@@ -54,25 +54,35 @@ table {
 }
 
 th {
-    @extend %heading4;
-    background-color: $light-gray;
-    font-weight: bold;
+  @extend %heading4;
+  background-color: $light-gray;
+  font-weight: bold;
 }
 
 td {
+  input {
+    width: 100%;
+  }
+
+  input,
+  input::placeholder {
     @extend %commonText;
+  }
 }
 
 tr {
-    th, td{
-        text-align: left;
-        padding: 16px 24px;
-        border-right: 1px solid #ededed;
-        border-bottom: 1px solid #ededed;
-      }
 
-      th:last-of-type,
-      td:last-of-type {
-        border-right: none;
-      }
+  th,
+  td {
+    text-align: left;
+    padding: 16px 24px;
+    border-right: 1px solid #ededed;
+    border-bottom: 1px solid #ededed;
+    width: 20%;
+  }
+
+  th:last-of-type,
+  td:last-of-type {
+    border-right: none;
+  }
 }

@@ -16,12 +16,14 @@ export class MainPageTableComponent implements OnInit {
 
   constructor(private dataKeeper: DataKeeperService) {
     this.activTable = this.dataKeeper.getTableData();
-    console.log(this.activTable)
     this.dataSource.data = new BehaviorSubject<TabbleElement[]>(this.activTable);
-    console.log(this.dataSource)
   }
 
   ngOnInit() {
+  }
+
+  ololol(event, i) { 
+    console.log(event, i)
   }
 }
 

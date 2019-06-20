@@ -9,27 +9,40 @@
 
       <ng-container cdkColumnDef="1st level">
         <th cdk-header-cell *cdkHeaderCellDef> 1st level</th>
-        <td cdk-cell *cdkCellDef="let el">{{el.level_1}}</td>
+        <td cdk-cell *cdkCellDef="let el; let i = index">
+          <input type="text" id="level_1" (click)='ololol($event.target.id, i)' 
+          placeholder="{{el.level_1}}">
+        </td>
       </ng-container>
 
       <ng-container cdkColumnDef="2nd level">
         <th cdk-header-cell *cdkHeaderCellDef> 2nd level </th>
-        <td cdk-cell *cdkCellDef="let el">{{el.level_2}}</td>
+        <td cdk-cell *cdkCellDef="let el; let i = index">
+            <input placeholder="{{el.level_2}}" type="text" id="level_2" 
+            (click)='ololol($event.target.id, i)'>
+        </td>
       </ng-container>
 
       <ng-container cdkColumnDef="3rd level">
         <th cdk-header-cell *cdkHeaderCellDef> 3rd level </th>
-        <td cdk-cell *cdkCellDef="let el">{{el.level_3}}</td>
+        <td cdk-cell *cdkCellDef="let el; let i = index">
+            <input placeholder="{{el.level_3}}" type="text" id="level_3" 
+            (click)='ololol($event.target.id, i)'>
+        </td>
       </ng-container>
 
       <ng-container cdkColumnDef="4th level">
         <th cdk-header-cell *cdkHeaderCellDef> 4th level </th>
-        <td cdk-cell *cdkCellDef="let el">{{el.level_4}}</td>
+        <td cdk-cell *cdkCellDef="let el; let i = index">
+          <input type="text" id="level_4" placeholder="{{el.level_4}}">
+        </td>
       </ng-container>
 
       <ng-container cdkColumnDef="5th level">
         <th cdk-header-cell *cdkHeaderCellDef> 5th level </th>
-        <td cdk-cell *cdkCellDef="let el">{{el.level_5}}</td>
+        <td cdk-cell *cdkCellDef="let el; let i = index">
+          <input type="text" id="level_5" placeholder="{{el.level_5}}">
+        </td>
       </ng-container>
 
       <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
