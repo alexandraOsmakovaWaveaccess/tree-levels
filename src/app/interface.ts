@@ -8,15 +8,18 @@ export interface TreeLevel {
 }
 
 export interface TabbleElement {
-  name: string;
-  level: number;
+  level_1: string;
+  level_2: string;
+  level_3: string;
+  level_4: string;
+  level_5: string;
 }
 
 export interface TreeItem {
   name: string;
   path: string;
   level: number;
-  id: number,
+  id: number;
   children: any[];
 }
 
