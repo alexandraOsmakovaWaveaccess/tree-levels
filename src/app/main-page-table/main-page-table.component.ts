@@ -23,10 +23,24 @@ export class MainPageTableComponent implements OnInit {
   }
 
   saveImprovementData() {
+    for (let i = 0; i < this.activTable.length; i++) {
+      let objKeys = Object.keys(this.activTable[i]);
+      objKeys = objKeys.filter((el) => {
+        if (this.activTable[i][el].length === 0) {
+          delete this.activTable[i][el]
+        } else {
+          return el
+        }
+      })
+      if (objKeys.length === 0) {
+        this.activTable.splice(i, 1)
+      }
+    }
+    console.log(this.activTable)
     this.dataKeeper.tableData = this.activTable;
   }
 
-  trackById(index:number, item: any) {
+  trackById(index: number, item: any) {
     return index
   }
 }

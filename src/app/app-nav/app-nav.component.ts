@@ -13,11 +13,11 @@ export class AppNavComponent implements OnInit {
   ngOnInit() {
   }
 
-  ololol() {
-    this.router.navigate(['lol'])
+  testCheckPage() {
+    this.router.navigate(['test-page'])
   }
 
-  kek() {
+  goToMain() {
     this.router.navigate([''])
   }
 

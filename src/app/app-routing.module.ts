@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainPageComponent } from './main-page/main-page.component';
-import { OlololComponent } from './ololol/ololol.component';
+import { TestPageComponent } from './test-page/test-page.component'
 
 const routes: Routes = [
   {
@@ -9,8 +9,8 @@ const routes: Routes = [
     component: MainPageComponent
   },
   {
-    path: 'lol',
-    component: OlololComponent
+    path: 'test-page',
+    component: TestPageComponent
   }
 ];
 

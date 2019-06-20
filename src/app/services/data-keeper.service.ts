@@ -159,9 +159,7 @@ export class DataKeeperService {
       
       const item = {
         ...lastItem,
-        [`level_${i.level}`]: i.name,
-        id: i.id,
-        level: i.level
+        [`level_${i.level}`]: i.name
       };
 
       acc.push(item);

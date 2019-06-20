@@ -12,7 +12,7 @@ import { AppNavComponent } from './app-nav/app-nav.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { MainPageMenuComponent } from './main-page-menu/main-page-menu.component';
 import { MainPageTableComponent } from './main-page-table/main-page-table.component';
-import { OlololComponent } from './ololol/ololol.component';
+import { TestPageComponent } from './test-page/test-page.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,7 @@ import { OlololComponent } from './ololol/ololol.component';
     MainPageComponent,
     MainPageMenuComponent,
     MainPageTableComponent,
-    OlololComponent
+    TestPageComponent
   ],
   imports: [
     BrowserModule,
