@@ -15,70 +15,70 @@ export class DataKeeperService {
       id: 0
     },
     {
-      name: 'First level item - 0',
+      name: 'First level item - 0(1)',
       expandable: true,
       level: 1,
       path: '0/1',
       id: 1
     },
     {
-      name: 'Second level item - 0',
+      name: 'Second level item - 0(2)',
       expandable: false,
       level: 2,
       path: '0/1/2',
       id: 2
     },
     {
-      name: 'Second level item - 1',
+      name: 'Second level item - 1(3)',
       expandable: false,
       level: 2,
       path: '0/1/3',
       id: 3
     },
     {
-      name: 'First level item - 1',
+      name: 'First level item - 1(4)',
       expandable: true,
       level: 1,
       path: '0/4',
       id: 4
     },
     {
-      name: 'Second level item - 0',
+      name: 'Second level item - 0(5)',
       expandable: false,
       level: 2,
       path: '0/4/5',
       id: 5
     },
     {
-      name: 'Second level item - 1',
+      name: 'Second level item - 1(6)',
       expandable: true,
       level: 2,
       path: '0/4/6',
       id: 6
     },
     {
-      name: 'Third level item - 0',
+      name: 'Third level item - 0(7)',
       expandable: false,
       level: 3,
       path: '0/4/6/7',
       id: 7
     },
     {
-      name: 'Third level item - 1',
+      name: 'Third level item - 1(8)',
       expandable: true,
       level: 3,
       path: '0/4/6/8',
       id: 8
     },
     {
-      name: 'Fourth level item - 0',
+      name: 'Fourth level item - 0(9)',
       expandable: true,
       level: 4,
       path: '0/4/6/8/9',
       id: 9
     },
     {
-      name: 'Fifth level item - 0',
+      name: 'Fifth level item - 0(10)',
       expandable: false,
       level: 5,
       path: '0/4/6/8/9/10',
@@ -147,31 +147,33 @@ export class DataKeeperService {
 
   public getTableData() {
     let acc = [];
+    let rows = [];
 
     const iterator = (i) => {
+      if (i.level === 1) {
+        acc = [];
+      }
       const lastItem = acc[acc.length - 1] || {};
       
-      acc.push({
+      const item = {
         ...lastItem,
         [`level_${i.level}`]: i.name,
-        id: i.id
-      });
+      };
 
-      if (i.children && i.level < 6) {
-        i.children.forEach(iterator);      
+      acc.push(item);
+
+      if (i.children.length > 0 && i.level < 6) {
+        i.children.forEach(iterator);
+      } 
+      if (i.children.length === 0 || i.level > 5) {
+        rows.push(item);
       }
     }
 
-    this.createTree().children.forEach(iterator);  
+    this.createTree().children.forEach(iterator);
 
-    // for(let i = 0; i < acc.length; i++) {
-    //   if(i !== acc.length-1 && (JSON.stringify(acc[i+1]).indexOf(JSON.stringify(acc[i])))) {
-    //     acc.splice(i, 1)
-    //   }
-    // }
+    console.log(rows);
 
-    console.log(acc)
-    return acc
   }
 
 }
