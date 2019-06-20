@@ -15,15 +15,19 @@ export class MainPageTableComponent implements OnInit {
   dataSource = new ExampleDataSource();
 
   constructor(private dataKeeper: DataKeeperService) {
-    this.activTable = this.dataKeeper.getTableData();
+    this.activTable = this.dataKeeper.tableData;
     this.dataSource.data = new BehaviorSubject<TabbleElement[]>(this.activTable);
   }
 
   ngOnInit() {
   }
 
-  ololol(event, i) { 
-    console.log(event, i)
+  saveImprovementData() {
+    this.dataKeeper.tableData = this.activTable;
+  }
+
+  trackById(index:number, item: any) {
+    return index
   }
 }
 

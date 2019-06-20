@@ -85,6 +85,8 @@ export class DataKeeperService {
       id: 10
     }];
 
+    public tableData: Array<any> = this.getTableData()
+
   constructor() {
   }
 
@@ -145,7 +147,7 @@ export class DataKeeperService {
     }
   }
 
-  public getTableData() {
+  getTableData() {
     let acc: Array<any> = [];
     let rows: Array<any> = [];
 
@@ -158,6 +160,8 @@ export class DataKeeperService {
       const item = {
         ...lastItem,
         [`level_${i.level}`]: i.name,
+        id: i.id,
+        level: i.level
       };
 
       acc.push(item);
