@@ -85,7 +85,7 @@ export class DataKeeperService {
       id: 10
     }];
 
-    public tableData: Array<any> = this.getTableData()
+  public tableData: Array<any> = this.getTableData()
 
   constructor() {
   }
@@ -155,18 +155,19 @@ export class DataKeeperService {
       if (i.level === 1) {
         acc = [];
       }
-      const lastItem  = acc[acc.length - 1] || {};
-      
+      const lastItem = acc[acc.length - 1] || {};
+
       const item = {
         ...lastItem,
-        [`level_${i.level}`]: i.name
+        [`level_${i.level}`]: i.name,
+        [`item_id_${i.level}`]: i.id
       };
 
       acc.push(item);
 
       if (i.children.length > 0 && i.level < 6) {
         i.children.forEach(iterator);
-      } 
+      }
       if (i.children.length === 0 || i.level > 5) {
         rows.push(item);
       }
@@ -177,5 +178,41 @@ export class DataKeeperService {
     return rows;
 
   }
+
+  public refreshFlatData(data) {
+    let clearRefreshedData = [];
+    for (let i = 0; i < data.length; i++) {
+      let objKeys = Object.keys(data[i]);
+      for (let j = 0; j < objKeys.length; j++) {
+        if (j < objKeys.length - 1 && objKeys[j].slice(-1) === objKeys[j + 1].slice(-1)) {
+          clearRefreshedData.push({
+            name: data[i][objKeys[j]],
+            id: data[i][objKeys[j + 1]]
+          })
+        }
+      }
+    }
+
+    clearRefreshedData.sort((a, b) => {
+      return a.id - b.id
+    })
+
+    // for(let i = 1; i < clearRefreshedData.length; i++) {
+    //    if(i < clearRefreshedData.length -1 && this.isEqual(clearRefreshedData[i-1], clearRefreshedData[i])) {
+    //     clearRefreshedData.splice(i-1, 1)
+    //    }
+    // } 
+    console.log(clearRefreshedData)
+  }
+
+  // isEqual(a, b) {
+  //   console.log(a, b)
+  //   const result = a.id === b.id ?  true : false;
+  //   return result;
+
+
+
+
+
 
 }

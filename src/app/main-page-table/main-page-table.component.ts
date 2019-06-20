@@ -36,8 +36,12 @@ export class MainPageTableComponent implements OnInit {
         this.activTable.splice(i, 1)
       }
     }
-    console.log(this.activTable)
-    this.dataKeeper.tableData = this.activTable;
+
+    this.dataKeeper.refreshFlatData(this.activTable);
+  }
+
+  addNewTableRow() {
+
   }
 
   trackById(index: number, item: any) {
