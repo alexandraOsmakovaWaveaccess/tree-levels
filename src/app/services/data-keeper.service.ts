@@ -180,36 +180,17 @@ export class DataKeeperService {
   }
 
   public refreshFlatData(data) {
-    let clearRefreshedData = [];
-    for (let i = 0; i < data.length; i++) {
-      let objKeys = Object.keys(data[i]);
-      for (let j = 0; j < objKeys.length; j++) {
-        if (j < objKeys.length - 1 && objKeys[j].slice(-1) === objKeys[j + 1].slice(-1)) {
-          clearRefreshedData.push({
-            name: data[i][objKeys[j]],
-            id: data[i][objKeys[j + 1]]
-          })
-        }
-      }
+    for(let i = 0; i < data.length; i++) {
+      let changedEl = this.dataFlat.find(el => this.extractSelectedEl(data[i].id, el));
+      changedEl.name = data[i].name;
     }
-
-    clearRefreshedData.sort((a, b) => {
-      return a.id - b.id
-    })
-
-    // for(let i = 1; i < clearRefreshedData.length; i++) {
-    //    if(i < clearRefreshedData.length -1 && this.isEqual(clearRefreshedData[i-1], clearRefreshedData[i])) {
-    //     clearRefreshedData.splice(i-1, 1)
-    //    }
-    // } 
-    console.log(clearRefreshedData)
   }
 
-  // isEqual(a, b) {
-  //   console.log(a, b)
-  //   const result = a.id === b.id ?  true : false;
-  //   return result;
-
+  extractSelectedEl(id, el) {
+    if(el.id === id) {
+      return true
+    }
+  }
 
 
 

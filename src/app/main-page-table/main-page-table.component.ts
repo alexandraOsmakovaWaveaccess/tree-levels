@@ -13,13 +13,23 @@ export class MainPageTableComponent implements OnInit {
   activTable: Array<TabbleElement>;
   displayedColumns: string[] = ['1st level', '2nd level', '3rd level', '4th level', '5th level'];
   dataSource = new ExampleDataSource();
+  dirtyInputs: Array<any> = [];
 
   constructor(private dataKeeper: DataKeeperService) {
     this.activTable = this.dataKeeper.tableData;
     this.dataSource.data = new BehaviorSubject<TabbleElement[]>(this.activTable);
+    console.log(this.activTable)
   }
 
   ngOnInit() {
+  }
+
+  getDirtyInputIndex(el, index) {
+    const inputElem = {
+      name: el[`level_${index}`],
+      id: el[`item_id_${index}`]
+    }
+    this.dirtyInputs.push(inputElem)
   }
 
   saveImprovementData() {
@@ -37,7 +47,7 @@ export class MainPageTableComponent implements OnInit {
       }
     }
 
-    this.dataKeeper.refreshFlatData(this.activTable);
+    this.dataKeeper.refreshFlatData(this.dirtyInputs);
   }
 
   addNewTableRow() {
