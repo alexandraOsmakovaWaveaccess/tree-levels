@@ -18,7 +18,6 @@ export class MainPageTableComponent implements OnInit {
   constructor(private dataKeeper: DataKeeperService) {
     this.activTable = this.dataKeeper.tableData;
     this.dataSource.data = new BehaviorSubject<TabbleElement[]>(this.activTable);
-    console.log(this.activTable)
   }
 
   ngOnInit() {
@@ -27,26 +26,29 @@ export class MainPageTableComponent implements OnInit {
   getDirtyInputIndex(el, index) {
     const inputElem = {
       name: el[`level_${index}`],
-      id: el[`item_id_${index}`]
+      id: el[`item_id_${index}`],
+      lastPath: el.path,
+      level: index
+
     }
     this.dirtyInputs.push(inputElem)
   }
 
   saveImprovementData() {
-    for (let i = 0; i < this.activTable.length; i++) {
-      let objKeys = Object.keys(this.activTable[i]);
-      objKeys = objKeys.filter((el) => {
-        if (this.activTable[i][el].length === 0) {
-          delete this.activTable[i][el]
-        } else {
-          return el
-        }
-      })
-      if (objKeys.length === 0) {
-        this.activTable.splice(i, 1)
-      }
-    }
-
+    // for (let i = 0; i < this.activTable.length; i++) {
+    //   let objKeys = Object.keys(this.activTable[i]);
+    //   objKeys = objKeys.filter((el) => {
+    //     if (this.activTable[i][el].length === 0) {
+    //       delete this.activTable[i][el]
+    //     } else {
+    //       return el
+    //     }
+    //   })
+    //   if (objKeys.length === 0) {
+    //     this.activTable.splice(i, 1)
+    //   }
+    // }
+    // console.log(this.activTable)
     this.dataKeeper.refreshFlatData(this.dirtyInputs);
   }
 

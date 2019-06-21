@@ -160,7 +160,8 @@ export class DataKeeperService {
       const item = {
         ...lastItem,
         [`level_${i.level}`]: i.name,
-        [`item_id_${i.level}`]: i.id
+        [`item_id_${i.level}`]: i.id,
+        path: i.path
       };
 
       acc.push(item);
@@ -180,17 +181,58 @@ export class DataKeeperService {
   }
 
   public refreshFlatData(data) {
-    for(let i = 0; i < data.length; i++) {
-      let changedEl = this.dataFlat.find(el => this.extractSelectedEl(data[i].id, el));
-      changedEl.name = data[i].name;
+    console.log(data)
+    if(data.length === 1 && data[0].id === undefined && data[0].name.length !== 0) {
+      this.createNewFlatItem(data[0])
     }
+    // for (let i = 0; i < data.length; i++) {
+    //   if (data[i].id === undefined && data[i].name.length !== 0) {
+    //     console.log('no index')
+    //     const createdItemPath = this.ololol(data[i]);
+    //   }
+    //   else {
+    //     console.log('has index')
+    //     let changedElIndex = this.dataFlat.findIndex(el => this.extractSelectedEl(data[i].id, el, 'id'));
+    //     if (data[i].name) {
+    //       this.dataFlat[changedElIndex].name = data[i].name;
+    //     } else {
+    //       this.dataFlat.splice(changedElIndex, 1);
+    //     }
+    //   }
+    // }
+    console.log(this.dataFlat)
   }
 
-  extractSelectedEl(id, el) {
-    if(el.id === id) {
-      return true
-    }
+  ololol(data) {
+    const lastPath = this.dataFlat.find(el => {
+      if ((el.path.slice(0, data.lastPath.length)) === data.lastPath
+        && el.path.length > data.lastPath.length) {
+        return true
+      }
+    })
+    return lastPath
   }
+
+createNewFlatItem(data) {
+  const createdItemId = this.dataFlat[this.dataFlat.length - 1].id + 1;
+  this.dataFlat.push(
+    {
+      name: data.name,
+      expandable: false,
+      level: data.level,
+      path: `${data.lastPath}/${createdItemId}`,
+      id: createdItemId,
+    }
+  )
+  let createdElParntIndex = this.dataFlat.findIndex(el => this.extractSelectedEl(data.lastPath, el, 'path'));
+  this.dataFlat[createdElParntIndex].expandable = true;
+}
+
+extractSelectedEl(id, el, str) {
+  if (el[str] === id) {
+    return true
+  }
+}
 
 
 
