@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { TreeLevel, TreeItem } from '../interface';
+import { TreeLevel, TreeItem, FlatDataRefresh } from '../interface';
+
 
 @Injectable({
   providedIn: 'root'
@@ -85,9 +86,10 @@ export class DataKeeperService {
       id: 10
     }];
 
-  public tableData: Array<any> = this.getTableData()
+  public tableData: Array<any>;
 
   constructor() {
+    this.getTableData()
   }
 
   private createTree() {
@@ -104,7 +106,7 @@ export class DataKeeperService {
     return dataToTree
   }
 
-  private extractChild(el) {
+  private extractChild(el: TreeLevel) {
     let treeObject: TreeItem = {
       name: el.name,
       path: el.path,
@@ -116,7 +118,7 @@ export class DataKeeperService {
     return treeObject;
   }
 
-  private getAllChildren(path) {
+  private getAllChildren(path: string) {
     let children = new Array();
     for (let i = 0; i < this.dataFlat.length; i++) {
       if (this.dataFlat[i].path !== path && this.dataFlat[i].path.indexOf(path) !== -1) {
@@ -132,7 +134,7 @@ export class DataKeeperService {
     return children
   }
 
-  private clearChildrenList(data) {
+  private clearChildrenList(data: TreeItem) {
     data.children = data.children.filter(el => {
       if (el.path.length === `${data.path}/`.length + `${el.id}`.length) {
         return el
@@ -140,7 +142,7 @@ export class DataKeeperService {
     })
   }
 
-  private checkChildChildren(data) {
+  private checkChildChildren(data: TreeItem) {
     for (let i = 0; i < data.children.length; i++) {
       this.clearChildrenList(data.children[i]);
       this.checkChildChildren(data.children[i])
@@ -176,60 +178,38 @@ export class DataKeeperService {
 
     this.createTree().children.forEach(iterator);
 
-    return rows;
+    this.tableData = rows;
 
   }
 
-  public refreshFlatData(data) {
-    console.log(data)
+  public refreshFlatData(data: Array<FlatDataRefresh>) {
     if (data.length === 1 && data[0].id === undefined && data[0].name.length !== 0) {
       this.dataFlat.push(this.createNewFlatItem(data[0]))
-      console.log('alone')
     } else {
       for (let i = 0; i < data.length; i++) {
         if (data[i].id === undefined && data[i].name.length !== 0) {
-          console.log('not alone')
           let newEl = this.createNewFlatItem(data[i])
-          const createdItemPath = this.ololol(data[i]);
+          const createdItemPath = this.getParentPath(data[i]);
           if (createdItemPath !== undefined) {
             newEl.path = `${createdItemPath.path}/${newEl.id}`;
             createdItemPath.expandable = true;
           }
           this.dataFlat.push(newEl);
         }
+        else {
+          let changeadElIndex = this.dataFlat.findIndex(el => this.extractSelectedEl(data[i].id, el, 'id'));
+          if ((data[i].name.length === 0)) {
+            this.dataFlat.splice(changeadElIndex, 1);
+          } else {
+            this.dataFlat[changeadElIndex].name = data[i].name;
+          }
+        }
       }
     }
-    // else {
-    //   console.log('has index')
-    //   let changedElIndex = this.dataFlat.findIndex(el => this.extractSelectedEl(data[i].id, el, 'id'));
-    //   if (data[i].name) {
-    //     this.dataFlat[changedElIndex].name = data[i].name;
-    //   } else {
-    //     this.dataFlat.splice(changedElIndex, 1);
-    //   }
-    // }
-
-
-    // for (let i = 0; i < data.length; i++) {
-    //   if (data[i].id === undefined && data[i].name.length !== 0) {
-    //     console.log('no index')
-    //     const createdItemPath = this.ololol(data[i]);
-    //   }
-    //   else {
-    //     console.log('has index')
-    //     let changedElIndex = this.dataFlat.findIndex(el => this.extractSelectedEl(data[i].id, el, 'id'));
-    //     if (data[i].name) {
-    //       this.dataFlat[changedElIndex].name = data[i].name;
-    //     } else {
-    //       this.dataFlat.splice(changedElIndex, 1);
-    //     }
-    //   }
-    // }
-
-    console.log(this.dataFlat)
+    this.getTableData()
   }
 
-  ololol(data) {
+  getParentPath(data: FlatDataRefresh) {
     const lastPath = this.dataFlat.find(el => {
       if ((el.path.slice(0, data.lastPath.length)) === data.lastPath
         && el.path.length > data.lastPath.length) {
@@ -239,7 +219,7 @@ export class DataKeeperService {
     return lastPath
   }
 
-  createNewFlatItem(data) {
+  createNewFlatItem(data: FlatDataRefresh) {
     const createdItemId = this.dataFlat[this.dataFlat.length - 1].id + 1;
     let createdElParntIndex = this.dataFlat.findIndex(el => this.extractSelectedEl(data.lastPath, el, 'path'));
     this.dataFlat[createdElParntIndex].expandable = true;
@@ -253,7 +233,7 @@ export class DataKeeperService {
     }
   }
 
-  extractSelectedEl(id, el, str) {
+  extractSelectedEl(id: any, el:TreeLevel, str: string) {
     if (el[str] === id) {
       return true
     }

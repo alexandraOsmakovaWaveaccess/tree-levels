@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { TabbleElement } from '../interface';
+import { TabbleElement, FlatDataRefresh } from '../interface';
 import { DataKeeperService } from '../services/data-keeper.service';
 @Component({
   selector: 'app-main-page-table',
@@ -13,7 +13,7 @@ export class MainPageTableComponent implements OnInit {
   activTable: Array<TabbleElement>;
   displayedColumns: string[] = ['1st level', '2nd level', '3rd level', '4th level', '5th level'];
   dataSource = new ExampleDataSource();
-  dirtyInputs: Array<any> = [];
+  dirtyInputs: Array<FlatDataRefresh> = [];
 
   constructor(private dataKeeper: DataKeeperService) {
     this.activTable = this.dataKeeper.tableData;
@@ -24,7 +24,7 @@ export class MainPageTableComponent implements OnInit {
   }
 
   getDirtyInputIndex(el, index) {
-    const inputElem = {
+    const inputElem: FlatDataRefresh = {
       name: el[`level_${index}`],
       id: el[`item_id_${index}`],
       lastPath: el.path,
@@ -35,26 +35,8 @@ export class MainPageTableComponent implements OnInit {
   }
 
   saveImprovementData() {
-    // for (let i = 0; i < this.activTable.length; i++) {
-    //   let objKeys = Object.keys(this.activTable[i]);
-    //   objKeys = objKeys.filter((el) => {
-    //     if (this.activTable[i][el].length === 0) {
-    //       delete this.activTable[i][el]
-    //     } else {
-    //       return el
-    //     }
-    //   })
-    //   if (objKeys.length === 0) {
-    //     this.activTable.splice(i, 1)
-    //   }
-    // }
-    // console.log(this.activTable)
     this.dataKeeper.refreshFlatData(this.dirtyInputs);
     this.dirtyInputs = [];
-  }
-
-  addNewTableRow() {
-
   }
 
   trackById(index: number, item: any) {

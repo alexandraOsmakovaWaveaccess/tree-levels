@@ -15,6 +15,13 @@ export interface TabbleElement {
   level_5: string;
 }
 
+export interface FlatDataRefresh {
+  name: string;
+  id: number;
+  lastPath: string;
+  level: number
+}
+
 export interface TreeItem {
   name: string;
   path: string;

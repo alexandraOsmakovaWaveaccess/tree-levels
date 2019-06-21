@@ -10,13 +10,14 @@ import { TreeLevel } from '../interface';
   styleUrls: ['./main-page-menu.component.scss']
 })
 export class MainPageMenuComponent implements OnInit {
-  treeData = this.dataKeeper.dataFlat
+  treeData: Array<TreeLevel> = this.dataKeeper.dataFlat;
 
   constructor(private dataKeeper: DataKeeperService) {
    }
 
   ngOnInit() {
   }
+
 
   treeControl = new FlatTreeControl<TreeLevel>(
     node => node.level, node => node.expandable);
