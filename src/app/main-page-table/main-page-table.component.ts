@@ -50,6 +50,7 @@ export class MainPageTableComponent implements OnInit {
     // }
     // console.log(this.activTable)
     this.dataKeeper.refreshFlatData(this.dirtyInputs);
+    this.dirtyInputs = [];
   }
 
   addNewTableRow() {
