@@ -30,3 +30,14 @@ export interface TreeItem {
   children: any[];
 }
 
+export class TodoItemNode {
+  children: TodoItemNode[];
+  name: string;
+}
+
+export class TodoItemFlatNode {
+  name: string;
+  level: number;
+  expandable: boolean;
+}
+

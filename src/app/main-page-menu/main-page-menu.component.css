@@ -33,6 +33,10 @@ section {
   margin-right: 32px;
 }
 
+.tree-node button:disabled {
+  display: none;
+}
+
 .expanded_item {
   background-color: #004076;
   color: #ffffff;

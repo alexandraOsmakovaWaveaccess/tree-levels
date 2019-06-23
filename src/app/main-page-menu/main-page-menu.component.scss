@@ -26,6 +26,10 @@ section {
         padding: 0;
         margin-right: 32px;
     }
+
+    button:disabled {
+        display: none;
+    }
 }
 
 .expanded_item {

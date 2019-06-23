@@ -3,6 +3,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TabbleElement, FlatDataRefresh } from '../interface';
 import { DataKeeperService } from '../services/data-keeper.service';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-main-page-table',
   templateUrl: './main-page-table.component.html',
@@ -14,6 +15,7 @@ export class MainPageTableComponent implements OnInit {
   displayedColumns: string[] = ['1st level', '2nd level', '3rd level', '4th level', '5th level'];
   dataSource = new ExampleDataSource();
   dirtyInputs: Array<FlatDataRefresh> = [];
+  static tableChanged = new Subject();
 
   constructor(private dataKeeper: DataKeeperService) {
     this.activTable = this.dataKeeper.tableData;
@@ -36,6 +38,7 @@ export class MainPageTableComponent implements OnInit {
 
   saveImprovementData() {
     this.dataKeeper.refreshFlatData(this.dirtyInputs);
+    MainPageTableComponent.tableChanged.next();
     this.dirtyInputs = [];
   }
 

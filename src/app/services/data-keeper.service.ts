@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TreeLevel, TreeItem, FlatDataRefresh } from '../interface';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -88,13 +89,18 @@ export class DataKeeperService {
 
   public tableData: Array<any>;
 
+  public treeDataChange:BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+
+  get data(): any[] { return this.treeDataChange.value; }
+
+
   constructor() {
     this.getTableData()
   }
 
   private createTree() {
 
-    let dataToTree: TreeItem = this.extractChild(this.dataFlat.find(el => {
+    let dataToTree: any = this.extractChild(this.dataFlat.find(el => {
       if (el.path.length === 1) {
         return true
       }
@@ -102,6 +108,10 @@ export class DataKeeperService {
 
     this.clearChildrenList(dataToTree);
     this.checkChildChildren(dataToTree);
+    
+
+    this.treeDataChange.next([dataToTree]);
+    console.log(this.treeDataChange)
 
     return dataToTree
   }
@@ -183,6 +193,7 @@ export class DataKeeperService {
   }
 
   public refreshFlatData(data: Array<FlatDataRefresh>) {
+    console.log(data)
     if (data.length === 1 && data[0].id === undefined && data[0].name.length !== 0) {
       this.dataFlat.push(this.createNewFlatItem(data[0]))
     } else {
@@ -206,6 +217,9 @@ export class DataKeeperService {
         }
       }
     }
+    this.dataFlat.sort((a, b) => {
+      return a.path.localeCompare(b.path)
+    })
     this.getTableData()
   }
 

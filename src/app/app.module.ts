@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon'
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CdkTreeModule} from '@angular/cdk/tree';
+import { MatTreeModule } from '@angular/material';
 import {CdkTableModule} from '@angular/cdk/table';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -27,7 +27,7 @@ import { TestPageComponent } from './test-page/test-page.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    CdkTreeModule,
+    MatTreeModule,
     MatIconModule,
     CdkTableModule,
     FormsModule
