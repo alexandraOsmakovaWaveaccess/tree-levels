@@ -17,7 +17,8 @@ export class MainPageTableComponent implements OnInit {
 
   constructor(private dataKeeper: DataKeeperService) {
     this.dataKeeper.tableData.subscribe(data => {
-      this.dataSource = data
+      this.dataSource = data;
+      console.log(this.dataSource)
     });
   }
 

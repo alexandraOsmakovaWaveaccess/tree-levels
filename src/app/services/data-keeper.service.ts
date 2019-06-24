@@ -176,20 +176,23 @@ export class DataKeeperService {
         path: i.path
       };
 
+     if(i.children.length !== 0) {
+       console.log(item, 'item')
       acc.push(item);
+     }
 
-      if (i.children.length > 0 && i.level < 6) {
+      console.log(lastItem, 'lastItem')
+
+      if (i.children.length !== 0 && i.level < 6) {
         i.children.forEach(iterator);
       }
+      
       if (i.children.length === 0 || i.level > 5) {
         rows.push(item);
       }
     }
-
     this.createTree().children.forEach(iterator);
-
     this.tableData.next(rows);
-
   }
 
   public refreshFlatData(data: Array<FlatDataRefresh>) {
