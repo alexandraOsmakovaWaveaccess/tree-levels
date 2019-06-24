@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataSource } from '@angular/cdk/collections';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { TabbleElement, FlatDataRefresh } from '../interface';
+import { FlatDataRefresh } from '../interface';
 import { DataKeeperService } from '../services/data-keeper.service';
 import { Subject } from 'rxjs';
 @Component({
@@ -11,15 +9,16 @@ import { Subject } from 'rxjs';
 })
 export class MainPageTableComponent implements OnInit {
 
-  activTable: Array<TabbleElement>;
+  activTable: Array<any>;
   displayedColumns: string[] = ['1st level', '2nd level', '3rd level', '4th level', '5th level'];
-  dataSource = new ExampleDataSource();
+  dataSource: any;
   dirtyInputs: Array<FlatDataRefresh> = [];
   static tableChanged = new Subject();
 
   constructor(private dataKeeper: DataKeeperService) {
-    this.activTable = this.dataKeeper.tableData;
-    this.dataSource.data = new BehaviorSubject<TabbleElement[]>(this.activTable);
+    this.dataKeeper.tableData.subscribe(data => {
+      this.dataSource = data
+    });
   }
 
   ngOnInit() {
@@ -45,15 +44,4 @@ export class MainPageTableComponent implements OnInit {
   trackById(index: number, item: any) {
     return index
   }
-}
-
-export class ExampleDataSource extends DataSource<TabbleElement> {
-  incomeData: Array<TabbleElement>;
-  data = new BehaviorSubject<TabbleElement[]>(this.incomeData);
-
-  connect(): Observable<TabbleElement[]> {
-    return this.data;
-  }
-
-  disconnect() { }
 }

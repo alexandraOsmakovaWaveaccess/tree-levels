@@ -87,11 +87,13 @@ export class DataKeeperService {
       id: 10
     }];
 
-  public tableData: Array<any>;
+  public tableData: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
-  public treeDataChange:BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  get tableDataGet(): any[] { return this.tableData.value; }
 
-  get data(): any[] { return this.treeDataChange.value; }
+  public treeDataChange:BehaviorSubject<TreeItem[]> = new BehaviorSubject<TreeItem[]>([]);
+
+  get data(): TreeItem[] { return this.treeDataChange.value; }
 
 
   constructor() {
@@ -100,7 +102,7 @@ export class DataKeeperService {
 
   private createTree() {
 
-    let dataToTree: any = this.extractChild(this.dataFlat.find(el => {
+    let dataToTree: TreeItem = this.extractChild(this.dataFlat.find(el => {
       if (el.path.length === 1) {
         return true
       }
@@ -109,9 +111,7 @@ export class DataKeeperService {
     this.clearChildrenList(dataToTree);
     this.checkChildChildren(dataToTree);
     
-
     this.treeDataChange.next([dataToTree]);
-    console.log(this.treeDataChange)
 
     return dataToTree
   }
@@ -188,12 +188,11 @@ export class DataKeeperService {
 
     this.createTree().children.forEach(iterator);
 
-    this.tableData = rows;
+    this.tableData.next(rows);
 
   }
 
   public refreshFlatData(data: Array<FlatDataRefresh>) {
-    console.log(data)
     if (data.length === 1 && data[0].id === undefined && data[0].name.length !== 0) {
       this.dataFlat.push(this.createNewFlatItem(data[0]))
     } else {

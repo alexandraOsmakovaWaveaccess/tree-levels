@@ -4,7 +4,7 @@ import { FormsModule }   from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon'
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatTreeModule } from '@angular/material';
-import {CdkTableModule} from '@angular/cdk/table';
+import {MatTableModule} from '@angular/material/table'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,7 +29,7 @@ import { TestPageComponent } from './test-page/test-page.component';
     BrowserAnimationsModule,
     MatTreeModule,
     MatIconModule,
-    CdkTableModule,
+    MatTableModule,
     FormsModule
   ],
   providers: [],

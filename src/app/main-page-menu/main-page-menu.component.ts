@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ArrayDataSource } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
 import { DataKeeperService } from '../services/data-keeper.service';
-import { TreeLevel, TodoItemNode, TodoItemFlatNode } from '../interface';
+import { TreeLevel, TreeItemNode, TreeItemFlatNode } from '../interface';
 import { of as ofObservable, Observable } from 'rxjs';
 
 
@@ -20,11 +19,8 @@ export class MainPageMenuComponent implements OnInit {
       this.isExpandable, this.getChildren);
     this.treeControl = new FlatTreeControl<any>(this.getLevel, this.isExpandable);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-
     this.dataKeeper.treeDataChange.subscribe(data => {
-      console.log(data)
       this.dataSource.data = data;
-      console.log(this.dataSource)
     });
   }
 
@@ -42,10 +38,10 @@ export class MainPageMenuComponent implements OnInit {
 
   hasNoContent = (_: number, _nodeData: any) => { return _nodeData.item === ''; };
 
-  transformer = (node: TodoItemNode, level: number) => {
+  transformer = (node: TreeItemNode, level: number) => {
     let flatNode = this.nestedNodeMap.has(node) && this.nestedNodeMap.get(node)!.name === node.name
       ? this.nestedNodeMap.get(node)!
-      : new TodoItemFlatNode();
+      : new TreeItemFlatNode();
     flatNode.name = node.name;
     if(!flatNode.level) {
       flatNode.level = level;
@@ -61,16 +57,16 @@ export class MainPageMenuComponent implements OnInit {
   }
 
 
-  flatNodeMap: Map<TodoItemFlatNode, TodoItemNode> = new Map<TodoItemFlatNode, TodoItemNode>();
-  nestedNodeMap: Map<TodoItemNode, TodoItemFlatNode> = new Map<TodoItemNode, TodoItemFlatNode>();
+  flatNodeMap: Map<TreeItemFlatNode, TreeItemNode> = new Map<TreeItemFlatNode, TreeItemNode>();
+  nestedNodeMap: Map<TreeItemNode, TreeItemFlatNode> = new Map<TreeItemNode, TreeItemFlatNode>();
 
-  selectedParent: TodoItemFlatNode | null = null;
+  selectedParent: TreeItemFlatNode | null = null;
 
-  treeControl: FlatTreeControl<TodoItemFlatNode>;
+  treeControl: FlatTreeControl<TreeItemFlatNode>;
 
-  treeFlattener: MatTreeFlattener<TodoItemNode, TodoItemFlatNode>;
+  treeFlattener: MatTreeFlattener<TreeItemNode, TreeItemFlatNode>;
 
-  dataSource: MatTreeFlatDataSource<TodoItemNode, TodoItemFlatNode>;
+  dataSource: MatTreeFlatDataSource<TreeItemNode, TreeItemFlatNode>;
 
 
 }

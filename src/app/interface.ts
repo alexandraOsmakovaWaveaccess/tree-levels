@@ -7,14 +7,6 @@ export interface TreeLevel {
   id: number
 }
 
-export interface TabbleElement {
-  level_1: string;
-  level_2: string;
-  level_3: string;
-  level_4: string;
-  level_5: string;
-}
-
 export interface FlatDataRefresh {
   name: string;
   id: number;
@@ -30,12 +22,12 @@ export interface TreeItem {
   children: any[];
 }
 
-export class TodoItemNode {
-  children: TodoItemNode[];
+export class TreeItemNode {
+  children: TreeItemNode[];
   name: string;
 }
 
-export class TodoItemFlatNode {
+export class TreeItemFlatNode {
   name: string;
   level: number;
   expandable: boolean;
